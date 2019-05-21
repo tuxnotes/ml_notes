@@ -46,3 +46,30 @@ def createDataSet():
 	return the majority class as our prediction for the class of inX
 ```
 
+Python代码如下：
+
+```python
+def classify0(inX, dataSet, labels, k):
+    dataSetSize = dataSet.shape[0]
+    diffMat = np.tile(inX, (dataSetSize, 1)) - dataSet
+    sqDiffMat = diffMat**2
+    sqDistances = sqDiffMat.sum(axis=1)
+    distances = sqDistances**0.5
+    sortedDistIndicies = distances.argsort()
+    classCount = {}
+    for i in range(k):
+        voteIlabel = labels[sortedDistIndicies[i]]
+        classCount[voteIlabel] = classCount.get(voteIlabel,0) + 1
+    sortedClassCount = sorted(classCount.iteritems(), key=operator.itemgetter(1), reverse=True)
+    return sortedClassCount[0][0]
+```
+
+### 1.1.3 How to test a classifier
+
+To test out a classifier, you start with some known data so you can hide the answer from the classifier and ask the classifier for its best guess.You can add up the number of times the classifier was wrong and divide it by the total number of tests you gave it. This will give you the error rate, which is a common measure to gauge how good a classifier is doing on a dataset. An error rate of 0 means you have a perfect classifier, and an error rate of 1.0 means the classifier is always wrong. You’ll see this in action with some solid data later.
+
+We’re going to put k NN to use in real-world examples in the next two sections. First, we’ll look at improving the results from a dating site with k NN , and then we’ll look at an impressive handwriting
+recognition example. We’ll employ testing in the handwriting recognition example to see if this algorithm is working.
+
+## 1.2 Example: improving matches from a dating site with kNN
+
