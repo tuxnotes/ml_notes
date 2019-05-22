@@ -71,5 +71,49 @@ To test out a classifier, you start with some known data so you can hide the ans
 We’re going to put k NN to use in real-world examples in the next two sections. First, we’ll look at improving the results from a dating site with k NN , and then we’ll look at an impressive handwriting
 recognition example. We’ll employ testing in the handwriting recognition example to see if this algorithm is working.
 
-## 1.2 Example: improving matches from a dating site with kNN
+## 1.2 示例:使用k-近邻算法改进约会网站的配对效果
+
+示例：在约会网站上使用k-近邻算法
+
+​	(1) 收集数据：提供文本文件；
+
+​	(2) 准备数据：使用Python解析文本文件；
+
+​	(3) 分析数据：使用Matplotlib画二维扩散图；
+
+​	(4) 训练算法：此步骤不适用于k-近邻算法；
+
+​	(5) 测试算法：使用海伦提供的部分数据作为测试样本
+
+​		测试样本和非测试样本的区别在于：测试样本是已经完成分类的数据，如果预测分类与实际类别不同，则标记为一个错误。
+
+​	(6) 使用算法：产生简单的命令行程序，然后海伦可以输入一些特征数据以判断对方是否为自己喜欢的类型。
+
+### 1.2.1 准备数据：从文本文件中解析数据
+
+海伦收集约会数据已经有一段时间了，这些数据存放在文本文件datingTestSet.txt中，每个样本数据占一行，总共1000行。海伦的样本主要包含以下3中特种：
+
+ - 每年获得的飞行常客里程数
+ - 玩视频游戏花费的时间百分比
+ - 每周消费的冰淇淋公升数
+
+将上述特征数据输入到分类器前，需要将数据格式转换为分类器接受的格式。因此在kNN.py中定义了一个新的函数*file2matrix* 。此函数以文件名作为参数输入，然后输出训练样本矩阵和类别标签向量。将下面的代码加到kNN.py
+
+```python
+def file2matrix(filename):
+    fr = open(filename)
+    numberOfLines = len(fr.readlines())
+    returnMat = zeros((numberOfLines, 3))
+    fr = open(filename)
+    index = 0
+    for line in fr.readlines():
+        line = line.strip()
+        listFromLine = line.split('\t')
+        returnMat[index, :] = listFromLine[0:3]
+        classLableVector.append(int(listFromLine[-1]))
+        index += 1
+    return returnMat, classLabelVector
+```
+
+
 
